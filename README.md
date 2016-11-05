@@ -34,12 +34,10 @@
 
 ```javascript
 	//request (here receives an object only with properties that need updating)
-	{
-		id: {
-			todo: String,
-			date: String(yyyy-MM-dd hh:mm),
-			done: boolean
-		}
+	{ //example:
+		todo: String,
+		date: String(yyyy-MM-dd hh:mm),
+		done: boolean
 	}
 
 	//response
