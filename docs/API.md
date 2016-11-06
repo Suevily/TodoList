@@ -10,7 +10,7 @@
 		id: {
 			todo: String,
 			date: String /*(yyyy-MM-dd hh:mm)*/,
-			done: boolean
+			done: Boolean
 		},
 		//...
 		nextID: Number /*this property can be ignored*/
