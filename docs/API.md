@@ -2,32 +2,32 @@
 
 ## TodoList
 
-* `GET` `/api/todos` list all the todos
+* `GET` `/api/todos` list all todos
 
 ```javascript
 	//response
-	{
-		id: {
+	[
+		{
 			todo: String,
-			date: String /*(yyyy-MM-dd hh:mm)*/,
-			done: Boolean
-		},
-		//...
-		nextID: Number /*this property can be ignored*/
-	}
+			date: String, /*(yyyy-MM-dd hh:mm)*/
+			done: Boolean,
+      id: Number
+		}
+	]
 ```
 
 * `GET` `/api/todos?search=` search specific todos by giving specific content
 
 ```javascript
 	//response
-	{
-		id: {
+	[
+		{
 			todo: String,
-			date: String(yyyy-MM-dd hh:mm),
-			done: boolean
-		}
-	}
+			date: String, /*(yyyy-MM-dd hh:mm)*/
+			done: Boolean,
+      id: Number
+    }
+	]
 ```
 
 * `POST` `/api/todo/:id` update a specific todo
@@ -36,8 +36,8 @@
 	//request (here receives an object only with properties that need updating)
 	{ //example:
 		todo: String,
-		date: String(yyyy-MM-dd hh:mm),
-		done: boolean
+		date: String, /*(yyyy-MM-dd hh:mm)*/
+		done: Boolean
 	}
 
 	//response
@@ -54,8 +54,8 @@
 	[
 		{
 			todo: String,
-			date: String(yyyy-MM-dd hh:mm),
-			done: boolean
+			date: String, /*(yyyy-MM-dd hh:mm)*/
+			done: Boolean
 		}
 	]
 
