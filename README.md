@@ -11,7 +11,7 @@
 			todo: String,
 			date: String, /*(yyyy-MM-dd hh:mm)*/
 			done: Boolean,
-      id: Number
+			id: Number
 		}
 	]
 ```
@@ -25,7 +25,7 @@
 			todo: String,
 			date: String, /*(yyyy-MM-dd hh:mm)*/
 			done: Boolean,
-      id: Number
+			id: Number
     }
 	]
 ```
