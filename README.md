@@ -26,7 +26,7 @@
 			date: String, /*(yyyy-MM-dd hh:mm)*/
 			done: Boolean,
 			id: Number
-    }
+		}
 	]
 ```
 
