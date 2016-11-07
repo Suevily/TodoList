@@ -37,22 +37,31 @@ app.listen(3000)
 // List all todos
 router.get('/api/todos', async (ctx, next) => {
   if (ctx.query.search) return await searchTodos(ctx, next)
-  ctx.body = JSON.stringify(todolist, null, ' ')
+  // Do some transformation
+  let todos = []
+  for (const id in todolist) {
+    if (todolist.hasOwnProperty(id) && todolist[id] && id !== 'nextID') {
+      let todo = todolist[id]
+      todo.id = Number(id)
+      todos.push(todo)
+    }
+  }
+  ctx.body = JSON.stringify(todos, null, ' ')
   return next()
 })
 
 // Update a todo matching the given id with new contents
 router.post('/api/todo/:id', async (ctx, next) => {
-  const id = ctx.params.id
+  const id = String(ctx.params.id)
   // Here receives a single object only with properties that need updating
   const postdata = ctx.request.body
 
   if (todolist.hasOwnProperty(id) && todolist[id]) {
     for (let key in postdata) {
-      todolist[id][key] = postdata[key]
+      if (postdata.hasOwnProperty(key)) todolist[id][key] = postdata[key]
     }
     await updateToFile()
-    ctx.body = JSON.stringify({id: id}, null, ' ')
+    ctx.body = JSON.stringify({id: Number(id)}, null, ' ')
   } else { // The given id does not exist
     ctx.body = 'failure'
     ctx.status = 400
@@ -68,7 +77,7 @@ router.put('/api/todos', async (ctx, next) => {
 
   let id = todolist.nextID
   for (let i in postdata) {
-    todolist[id] = postdata[i]
+    todolist[String(id)] = postdata[i]
     ids.push(id++)
   }
   todolist.nextID = id
@@ -85,7 +94,7 @@ router.del('/api/todo/:id', async (ctx, next) => {
   if (todolist.hasOwnProperty(id) && todolist[id]) {
     delete todolist[id]
     await updateToFile()
-    ctx.body = JSON.stringify({id: id}, null, ' ')
+    ctx.body = JSON.stringify({id: Number(id)}, null, ' ')
   } else { // The given id does not exist
     ctx.status = 400
     ctx.body = 'failure'
@@ -98,12 +107,14 @@ async function searchTodos(ctx, next) {
   // Get search content from request
   const content = ctx.query.search
   // Define an object to storage the matched todos
-  let matchedTodos = {}
-
-  for (let i in todolist) {
-    if (todolist.hasOwnProperty(i) && todolist[i] && i !== 'nextID') {
-      if (todolist[i].todo.includes(content)) {
-        matchedTodos[i] = todolist[i]
+  let matchedTodos = []
+  // Do some transformation
+  for (let id in todolist) {
+    if (todolist.hasOwnProperty(id) && todolist[id] && id !== 'nextID') {
+      if (todolist[id].todo.includes(content)) {
+        let todo = todolist[id]
+        todo.id = Number(id)
+        matchedTodos.push(todo)
       }
     }
   }
